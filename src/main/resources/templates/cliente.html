@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Formulario de Carga de Cliente</h1>
+	<form id="formProducto" th:object="${unCliente}" th:action="@{/cliente/guardar}" method="post">
+
+			<label for="numdoc">Documento</label> 
+			<input type="number"	id="numdoc" th:field="*{nroDoc}">
+		<br>
+			<label for="nomyape">NombreyApellido</label> 
+			<input type="text"	id="nomyape" th:field="*{nombreApellido}">
+		<br>
+
+			<label for="fechanac">Nacimiento</label>			
+			<input type="date"	id="fechanac" th:field="*{fechaNacimiento}">
+		<br>
+
+			<label for="tipo">Tipo</label> 
+			<select id="tipo" th:field="*{tipoDoc}">
+				<option value="DNI">DNI</option>
+				<option value="Pasaporte">Pasaporte</option>
+			<select>
+		<br>
+
+			<label for="codigo">Cod Area</label> 
+			<input type="number" id="codigo" th:field="*{codigoAreaTel}">		
+		<br>
+
+			<label for="numtel">Telefono</label> 
+			<input type="number" id="numtel" th:field="*{numTel}">		
+		<br>
+
+			<label for="email">Email</label> 
+			<input type="email" id="email" th:field="*{email}">
+		<br>
+			<label for="password">Contraseña</label> 
+			<input type="password"	id="password" th:field="*{password}">
+		<br>
+			<label for="fechaultcompra">UltimaCompra</label>			
+			<input type="date"	id="fechaultcompra" th:field="*{fechaUltimaCompra}">
+		<br>
+
+		<div>
+			<button type="submit" value="Agregar">Agregar</button>
+		</div>
+
+	</form>
+
+<!-- ---------------------------------------------------------------- -->
+
+<h3>Lista de Clientes</h3><br>
+			<div>
+				<table border=1 style="border-collapse:collapse">
+				    <tr>
+				      <th>Tipo</th>
+				      <th>Num Doc</th>
+				      <th>Apellido y Nombre</th>
+				      <th>Email</th>		
+				      <th>Fecha de Nac</th>
+				      <th>Fecha Ultima Compra</th>
+				      <th>Edad</th>				      
+				      <th>Cod - Telefono</th>
+				      <th>Datos Adicionales</th>
+				      
+				    </tr>
+					<tr th:each="cli : ${clientes}">
+						<td th:text="${cli.tipoDoc}"></td>
+						<td th:text="${cli.nroDoc}"></td>
+						<td th:text="${cli.nombreApellido}"></td>
+						<td th:text="${cli.email}"></td>				
+						<td th:text="${#temporals.format(cli.fechaNacimiento,'dd/MM/yyyy')}"></td>
+						<td th:text="${#temporals.format(cli.fechaUltimaCompra,'dd/MM/yyyy')}"></td>
+						<td th:text="${cli.getEdad()}"></td>
+						<td th:text="${cli.codigoAreaTel}+' - ' +${cli.numTel}"></td>
+						<td th:text="${cli.getTiempoDesdeUltimaCompra()}"></td>
+						<td th:text="${cli.getTiempoProxCumple}"></td>
+						
+					</tr>
+				</table>
+			</div>
+
+</body>
+</html>
